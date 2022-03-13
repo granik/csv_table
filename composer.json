@@ -1,0 +1,17 @@
+{
+    "name": "drupal/csv_table",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "description": "Provides a Block which uses a CSV as source for building a Table whose results can be filtered via a input field",
+    "keywords": [
+        "drupal",
+        "csv table"
+    ],
+    "homepage": "https://www.drupal.org/project/csv_table",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/csv_table",
+        "source": "http://cgit.drupalcode.org/csv_table"
+    },
+    "require": {}
+}

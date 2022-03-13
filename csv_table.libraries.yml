@@ -1,0 +1,9 @@
+default_css:
+  css:
+    component:
+      css/csv_table.css: {}
+filter:
+  js:
+    js/csv_table.filter.js: {}
+  dependencies:
+    - core/drupal

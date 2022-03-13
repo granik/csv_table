@@ -1,0 +1,26 @@
+.csv-table__table {
+  text-align: left;
+  border-collapse: collapse;
+  width: 100%;
+}
+.csv-table__table thead tr {
+  border-bottom: 2px solid black;
+}
+.csv-table__table td, .csv-table__table th {
+  padding: 0.65em;
+}
+.csv-table__table .csv-table__header {
+  padding: 0.65em;
+}
+.csv-table__table .csv-table__search {
+  align-self: flex-end;
+}
+
+.csv-table--sticky table {
+  position: relative;
+}
+.csv-table--sticky table th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}

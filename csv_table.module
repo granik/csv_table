@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @file
+ * Contains csv_table.module.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function csv_table_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the csv_table module.
+    case 'help.page.csv_table':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides a Block which uses a CSV as source for building a Table whose results can be filtered via an input field') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function csv_table_theme() {
+  return [
+    'block__csv_table' => [
+      'render element' => 'elements',
+      'template' => 'block--csv-table',
+      'base hook' => 'block',
+    ],
+    'csv_table__header' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+      'template' => 'csv-table--header',
+    ],
+    'table__csv_table__body' => [
+      'template' => 'table--csv-table--body',
+      'base hook' => 'table',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function csv_table_theme_suggestions_table(array $variables) {
+  // Caption used as hint for generating theme suggestions, use title instead.
+  if ($variables['caption'] === "CsvTableBlock") {
+    return ['table__csv_table__body'];
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function csv_table_cron() {
+  /** @var \Drupal\block\Entity\Block[] $blocks */
+  $blocks = Block::loadMultiple();
+  /** @var \Drupal\csv_table\CsvTableHelperInterface $helper */
+  $helper = \Drupal::service('csv_table.helper');
+  /** @var \Drupal\Core\State\State $state */
+  $state = \Drupal::state();
+  $csv_table_blocks = array_filter($blocks, function ($block) {
+    return $block->getPluginId() === 'csv_table_block';
+  });
+
+  /** @var \Drupal\block\Entity\Block $block */
+  foreach ($csv_table_blocks as $block) {
+    $block_config = $block->get('settings');
+    $state_key = 'csv_table_block__' . $block->id();
+
+    if (empty($block_config['unique_string'])) {
+      // Remove unused cache data.
+      $state->delete($state_key);
+      continue;
+    }
+
+    $lastmod = $state->get($state_key);
+    $was_updated = $helper->processRemoteFileUpdates($block_config, $lastmod);
+
+    if ($was_updated) {
+      $state->set($state_key, time());
+    }
+    if ($was_updated && isset($lastmod)) {
+      \Drupal::logger('csv_table')->info(
+        t('File <em>@filepath</em> external changes loaded.', [
+          '@filepath' => $block_config['path_to_csv'],
+        ])
+      );
+    }
+  }
+
+}

@@ -1,0 +1,30 @@
+{
+  "name": "csv_table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "npx gulp",
+    "build:css": "npx gulp sass",
+    "build:js": "npx gulp js",
+    "watch": "npx gulp watch"
+  },
+  "keywords": [
+    "drupal"
+  ],
+  "author": "Granik",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-remove-empty-lines": "^0.1.0",
+    "gulp-rollup-2": "^1.3.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-strip-json-comments": "^3.0.0",
+    "sass": "^1.49.7"
+  }
+}

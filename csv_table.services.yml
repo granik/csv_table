@@ -1,0 +1,4 @@
+services:
+  csv_table.helper:
+    class: Drupal\csv_table\CsvTableHelper
+    arguments: ['@http_client', '@cache_tags.invalidator']

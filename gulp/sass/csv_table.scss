@@ -1,0 +1,32 @@
+.csv-table {
+
+  &__table {
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+    thead tr {
+      border-bottom: 2px solid black;
+    }
+    td, th {
+      padding: 0.65em;
+    }
+  }
+
+  &__table &__header {
+    padding: 0.65em;
+  }
+
+  &__table &__search {
+    align-self: flex-end;
+  }
+}
+
+.csv-table--sticky {
+  table {
+    position: relative;
+    th {
+      position: sticky;
+      top: 0;
+    }
+  }
+}

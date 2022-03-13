@@ -1,0 +1,4 @@
+.idea/
+gulp/node_modules
+gulp/package-lock.json
+gulp/js/.jshintrc
